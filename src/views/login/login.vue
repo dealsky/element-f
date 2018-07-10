@@ -2,14 +2,15 @@
   <div class="login">
     <el-form class="login-form">
       <h3 class="title">系统登录</h3>
-      <div class="input-wrapper">
-        <span class="icon-user"></span>
-        <el-input class="input"></el-input>
-      </div>
-      <div class="input-wrapper">
-        <i class="icon-lock"></i>
-        <el-input class="input"></el-input>
-      </div>
+      <el-form-item class="input-wrapper">
+        <i class="icon icon-user"></i>
+        <el-input class="input" type="text" placeholder="账号"></el-input>
+      </el-form-item>
+
+      <el-form-item class="input-wrapper">
+        <i class="icon icon-lock"></i>
+        <el-input class="input" type="password" placeholder="密码"></el-input>
+      </el-form-item>
       <el-button class="btn-login" type="primary">登录</el-button>
     </el-form>
   </div>
@@ -31,16 +32,15 @@ export default {
       padding 35px 35px 15px 35px
       box-sizing border-box
       width 520px
+      .input-wrapper
+        .icon
+          display inline-block
+        .input
+          width 85%
       .title
         margin-bottom 40px
         text-align center
         font-size 26px
-      .input-wrapper
-        margin-bottom: 22px
-        .icon-user
-          display: inline-block
-        .input
-          width 85%
       .btn-login
         width 100%
 </style>
