@@ -10,9 +10,9 @@
       </el-form-item>
 
       <el-form-item class="input-wrapper">
-        <el-input class="input" type="password" placeholder="密码">
+        <el-input class="input" :type="passwd" placeholder="密码">
           <i class="icon icon-lock" slot="prefix"></i>
-          <i class="icon-suffix icon-eye_off" slot="suffix"></i>
+          <i class="icon-suffix" :class="{ 'icon-eye_off': eyeOff, 'icon-eye': !eyeOff }" slot="suffix" @click="clickEye"></i>
         </el-input>
       </el-form-item>
 
@@ -23,7 +23,22 @@
 
 <script>
 export default {
-  name: "login"
+  name: "login",
+  data() {
+    return {
+      eyeOff: true
+    };
+  },
+  computed: {
+    passwd() {
+      return this.eyeOff ? "password" : "text";
+    }
+  },
+  methods: {
+    clickEye() {
+      this.eyeOff = !this.eyeOff;
+    }
+  }
 };
 </script>
 
@@ -65,7 +80,7 @@ export default {
             display: inline-block;
             margin-top: 10px;
             vertical-align: top;
-            font-size 24px
+            font-size 20px
             color: #8b99a3
       .btn-login
         width 100%
