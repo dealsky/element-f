@@ -1,22 +1,23 @@
 <template>
   <div class="login">
-    <el-form class="login-form">
+    <el-form :model="loginForm" :rules="loginRules" ref="loginForm" class="login-form">
       <h3 class="title">系统登录</h3>
 
-      <el-form-item>
-        <el-input type="text" placeholder="账号">
+      <el-form-item prop="username">
+        <el-input type="text" placeholder="账号" v-model="loginForm.username">
           <i class="icon icon-user" slot="prefix"></i>
         </el-input>
       </el-form-item>
 
-      <el-form-item class="input-wrapper">
-        <el-input class="input" :type="passwd" placeholder="密码">
+      <el-form-item prop="password">
+        <el-input class="input" :type="passwd" placeholder="密码" v-model="loginForm.password">
           <i class="icon icon-lock" slot="prefix"></i>
-          <i class="icon-suffix" :class="{ 'icon-eye_off': eyeOff, 'icon-eye': !eyeOff }" slot="suffix" @click="clickEye"></i>
+          <i class="icon-suffix" :class="{ 'icon-eye_off': eyeOff, 'icon-eye': !eyeOff }" slot="suffix"
+             @click="clickEye"></i>
         </el-input>
       </el-form-item>
 
-      <el-button class="btn-login" type="primary">登录</el-button>
+      <el-button class="btn-login" type="primary" @click="handleLogin">登录</el-button>
     </el-form>
   </div>
 </template>
@@ -25,8 +26,34 @@
 export default {
   name: "login",
   data() {
+    const validateUsername = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入账号"));
+      } else {
+        callback();
+      }
+    };
+
+    const validatePassword = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入密码"));
+      } else if (value.length < 6) {
+        callback(new Error("密码长度不能小于6位"));
+      } else {
+        callback();
+      }
+    };
+
     return {
-      eyeOff: true
+      eyeOff: true,
+      loginForm: {
+        username: "",
+        password: ""
+      },
+      loginRules: {
+        username: [{ validator: validateUsername, trigger: "blur" }],
+        password: [{ validator: validatePassword, trigger: "blur" }]
+      }
     };
   },
   computed: {
@@ -37,6 +64,9 @@ export default {
   methods: {
     clickEye() {
       this.eyeOff = !this.eyeOff;
+    },
+    handleLogin() {
+      this.$refs.loginForm.validate(valid => {});
     }
   }
 };
